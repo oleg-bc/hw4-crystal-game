@@ -5,3 +5,27 @@
   body {
   background-image: url("../images/background.png");
   }
+
+  .Rules-Text{
+      background-color: aqua;
+      max-width: 400px;
+  }
+
+.current-points {
+    background-color: peru;
+}
+.win-lose {
+    background-color: chartreuse
+}
+.wins {
+    background-color: darkorange
+}
+.losses {
+    background-color: fuchsia;
+}
+
+.current-points, .win-lose, .wins,.losses {
+    max-width: 200px;
+    max-height: 25px;
+    font-size: 20px;
+}
