@@ -7,6 +7,10 @@
       width: 100px;
       height: 100px;
     }
+    body {
+    background-image: url("assets/images/background.png");
+    }
+
   </style>
 </head>
 <body>
@@ -16,9 +20,8 @@
   <div class= "win-lose">game in progress</div>
   <div class= "wins">wins:</div>
   <div class= "losses">losses:</div>
-  <div class="debug-gem-points">REMOVE BEFORE SUBMISSION<br></div>
+  <!-- <div class="debug-gem-points">REMOVE BEFORE SUBMISSION<br></div> -->
 
-  <!-- Note that this div is now empty. We will fill it dynamically -->
   <div id="crystals"></div>
 
   <!-- JAVASCRIPT  -->
@@ -29,10 +32,11 @@
   var setTarget= function(){
     var computerPick = Math.floor(Math.random() * 100) + 1;
     targetNumber = computerPick;
+    
+    console.log("just for fun this is the current TARGET NUM " + targetNumber);
+   
+    console.log("just for clarity currentScore is now "+ currentScore);
     return targetNumber;
-    console.log("just for fun this is the current TARGET NUM" + targetNumber);
-    var currentScore = 0;
-    console.log("just for clarity TARGET is now "+ currentScore);
   } 
 //   var computerPick = Math.floor(Math.random() * 100) + 1;
 //   targetNumber = computerPick;
@@ -58,18 +62,19 @@ targetNumber= setTarget();
         arrayArg[1] =  randomIntFromInterval(10,20);
         arrayArg[2] =  randomIntFromInterval(20,25);
         arrayArg[3] =  randomIntFromInterval(25,35);
-        console.log("Gem " +arrayArg.indexOf(arrayArg[i]) +" is worth "+arrayArg[i]+" points");
+       
 
-        for (i=0;i<4;i++){
+        for (i=0;i<=3;i++){
             var troubleShootString="Gem " +arrayArg.indexOf(arrayArg[i]) +" is worth "+arrayArg[i]+" points"+"<br>";
             $(".debug-gem-points").append(troubleShootString);
+            console.log("Gem " +arrayArg.indexOf(arrayArg[i]) +" is worth "+arrayArg[i]+" points");
         }
-        return numberOptions;
+        return arrayArg;
 }
 numberOptions=setNewCrystalVals(numberOptions);
 
   // Next we create a for loop to create crystals for every numberOption.
-  for (var i = 0; i < numberOptions.length; i++) {
+  for (var i = 0; i < 4; i++) {
 
     // For each iter create an img
     var imageCrystal = $("<img>");
@@ -83,7 +88,7 @@ numberOptions=setNewCrystalVals(numberOptions);
 
     // Each imageCrystal will be given a data attribute called data-crystalValue.
     // This data attribute will be set equal to the array value.
-    imageCrystal.attr("data-crystalvalue", numberOptions[i]);
+    imageCrystal.attr("data-crystalvalue", numberOptions[i]);  
 
     // Lastly, each crystal image (with all it classes and attributes) will get added to the page.
     $("#crystals").append(imageCrystal);
@@ -100,8 +105,12 @@ numberOptions=setNewCrystalVals(numberOptions);
     // Since attributes on HTML elements are strings, we must convert it 
     //to an integer before adding to the currentScore
 
-     var crystalValue = ($(this).attr("data-crystalvalue"));
+     var crystalValue = ($(this).attr("data-crystalvalue")); 
+     console.log("value of this.attr data-crystalValue is  " + crystalValue);
      crystalValue = parseInt(crystalValue);
+     console.log("after parse the value of this.attr data-crystalValue is  " + crystalValue);
+
+
 
     // We then add the crystalValue to the user's "currentScore" which is a global variable.
     // Every click, from every crystal adds to the global currentScore.
@@ -112,20 +121,24 @@ numberOptions=setNewCrystalVals(numberOptions);
     $(".current-points").text("current points "+currentScore);
 
     if (currentScore == targetNumber) {
-        currentScore=0;
+        currentScore = 0;
+        $(".debug-gem-points").text("");
+        numberOptions=setNewCrystalVals(numberOptions);  
       $(".win-lose").text("you win!");
+      $(".current-points").text(0);
       wins++;
-     
+        
       targetNumber= setTarget();
       $("#number-to-guess").text(targetNumber);
-      $(".win").text("wins " + wins);
-      numberOptions=setNewCrystalVals(numberOptions);
+      $(".wins").text("wins " + wins);
+      
 
     }
 
-    else if (currentScore >= targetNumber) {
-      currentScore=0;
-      $(".debug-gem-points").text("");  
+    else if (currentScore > targetNumber) {
+        currentScore = 0;
+      $(".debug-gem-points").text("");
+      numberOptions=setNewCrystalVals(numberOptions);  
       $(".win-lose").text("you lose!");
       $(".current-points").text(0);
       
@@ -133,7 +146,7 @@ numberOptions=setNewCrystalVals(numberOptions);
       targetNumber= setTarget();
       $("#number-to-guess").text(targetNumber);
       $(".losses").text("losses " + losses);
-      numberOptions=setNewCrystalVals(numberOptions);
+      
 
     }
 
