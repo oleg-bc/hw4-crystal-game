@@ -22,6 +22,6 @@ and click on any crystal at the bottom.
 
 This is a one screen game so there's only 1 screenshot
 
-![alt text]( ./images/readme-ss.png "Game screen shot 1")
+![game screenshot]( ./images/readme-ss.png "Game screen shot 1", /readme-ss.PNG)
 
  of essential code, and gif walkthroughs
