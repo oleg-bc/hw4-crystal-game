@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>simple crystal game</title>
+
+  <style type="text/css">
+</style>
+
+</head>
+<body>
+
+<div class="Game-Title">Crystals Collector!</div>
+<div class="Rules-Text">You'll be given a random number at the sart of the <br>game.
+    <br>
+    There are four crystals below. By clicking on a crystal you <br> will add 
+    a specific amount of points to your total score.
+    <br><br>
+    You win the game by matching your total score to random <br> number, 
+    you lose the game if your total score goes above the random number.
+    <br><br>
+    The value of each crystal is hidden from you until you <br> click on it.
+    <br><br>
+    Each time when the game starts, the game will change values of each crystal.
+    <br>
+</div>
+<div class="number-to-guess">TARGET NUM:</div>
+<div class="winlose"></div>
+<div class="crystals">
+        <div class="c1"></div>
+        <div class="c2"></div>
+        <div class="c3"></div>
+        <div class="c4"></div>
+    </div>
+</div class="total-score"></div>
+<!-- JAVASCRIPT  -->
+  <!-- ========================================= -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <script type="text/javascript">
+
+  var targetNumber = 53;
+  var computerPick = Math.floor(Math.random() * 100) + 1;
+  targetNumber = computerPick;
+
+// WILL USE THIS FUNCT TO DETERMINE THE RANDOM VAL OF EACH CRYSTAL
+  var randomIntFromInterval = function(min,max){ 
+      return Math.floor(Math.random()*(max-min+1)+min);
+    }
+
+  //$(".number-to-guess").text(targetNumber);
+  $(".number-to-guess").append( targetNumber );
+
+  var counter = 0;
+
+  // Now for the hard part. Creating multiple crystals each with their own unique number value.
+
+  // We begin by expanding our array to include four options.
+  var numberOptions = [10, 5, 3, 7];
+
+  // Next we create a for loop to create crystals 
+  // for every numberOption.
+  for (var i = 0; i < numberOptions.length; i++) {
+
+    // For each iteration, we will create an imageCrystal
+    var imageCrystal = $("<img>");
+
+    // First each crystal will be given the class ".crystal-image".
+    // This will allow the CSS to take effect.
+    imageCrystal.addClass("crystal-image");
+
+    // Each imageCrystal will be given a src link to the crystal image
+    imageCrystal.attr("src", "http://cdn.playbuzz.com/cdn/35910209-2844-45c0-b099-f4d82878d54f/00261fda-4062-4096-81fd-8cf96b9034e8.jpg");
+
+    // Each imageCrystal will be given a data attribute called data-crystalValue.
+    // This data attribute will be set equal to the array value.
+    imageCrystal.attr("data-crystalvalue", numberOptions[i]);
+
+    // Lastly, each crystal image (with all it classes and attributes) will 
+    // get added to the page.
+    $("#crystals").append(imageCrystal);
+  }
+
+  // This time, our click event applies to 
+  // every single crystal on the page. Not just one.
+  $(".crystal-image").on("click", function() {
+
+    // Determining the crystal's value requires us to extract the value from the data attribute.
+    // Using the $(this) keyword specifies that we should be extracting
+    // the crystal value of the clicked crystal.
+    // Using the .attr("data-crystalvalue") allows us to grab the value out of 
+    //the "data-crystalvalue" attribute.
+    // Since attributes on HTML elements are strings, we must convert it 
+    //to an integer before adding to the counter
+
+    var crystalValue = ($(this).attr("data-crystalvalue"));
+    crystalValue = parseInt(crystalValue);
+    // We then add the crystalValue to the user's "counter" which is a global variable.
+    // Every click, from every crystal adds to the global counter.
+    counter += crystalValue;
+
+    // All of the same game win-lose logic applies. So the rest remains unchanged.
+    alert("New score: " + counter);
+
+    if (counter === targetNumber) {
+      alert("You win!");
+    }
+
+    else if (counter >= targetNumber) {
+      alert("You lose!!");
+    }
+
+  });
+
+  </script>
+</div>
+</body>
+</html>
