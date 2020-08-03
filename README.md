@@ -1,4 +1,4 @@
-# unit-4-game
+# Brushing up on JS/HTML/JQUERY and building a simple guessing game
 CrystalsCollector Game
 
 The project is a game.
